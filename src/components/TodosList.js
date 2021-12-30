@@ -1,6 +1,7 @@
 import { IconButton, makeStyles } from '@material-ui/core';
 import { Edit, DeleteForever, CheckBox } from '@material-ui/icons';
-import React from 'react'
+import React from 'react';
+import axios from "axios";
 
 const useStyles = makeStyles(() => ({
     buttonCheck: {
@@ -45,12 +46,19 @@ const useStyles = makeStyles(() => ({
     }
 }));
 
-const TodosList = ({todos, setTodos, setEditTodo }) => {
+const TodosList = ({todos, setTodos, setEditTodo, callback, setCallback}) => {
 
     const classes = useStyles();
 
-        const handleDelete = ({id}) => {
-            setTodos(todos.filter((todo) => todo.id !== id));
+        const handleDelete = async ({ _id }) => {
+            // setTodos(todos.filter((todo) => todo.id !== id));
+            try {
+                await axios.delete(`http://localhost:5000/api/task/${_id}`
+                );  
+                setCallback(!callback);
+            } catch (e) {
+                console.log(e);
+            }
         }
 
         const handleComplete = (todo) => {
@@ -64,18 +72,18 @@ const TodosList = ({todos, setTodos, setEditTodo }) => {
             );
         };
 
-        const handleEdit = ({id}) => {
-            const findTodo = todos.find((todo) => todo.id === id);
+        const handleEdit = ({ _id }) => {
+            const findTodo = todos.find((todo) => todo._id === _id);
             setEditTodo(findTodo);
         }
 
     return ( 
     <div>
         {todos.map((todo) => (
-            <li className={classes.listItem} key={todo.id}>
+            <li className={classes.listItem} key={todo._id}>
                 <input 
                 type="text" 
-                value={todo.title} 
+                value={todo.task} 
                 className={`list ${todo.completed ? "complete" : ""}`} 
                 onChange={(event) => event.preventDefault()} 
                 />
