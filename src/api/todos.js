@@ -1,6 +1,6 @@
 import axios from "axios"
 
-const fetchUrl = "http://localhost:5000/api/task";
+const fetchUrl = "https://todolist-improving.herokuapp.com/api/task";
 
 export const fetchAllTodos = async () => {
     try {

@@ -53,7 +53,7 @@ const TodosList = ({todos, setTodos, setEditTodo, callback, setCallback}) => {
         const handleDelete = async ({ _id }) => {
             // setTodos(todos.filter((todo) => todo.id !== id));
             try {
-                await axios.delete(`http://localhost:5000/api/task/${_id}`
+                await axios.delete(`https://todolist-improving.herokuapp.com/api/task/${_id}`
                 );  
                 setCallback(!callback);
             } catch (e) {

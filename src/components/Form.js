@@ -56,7 +56,7 @@ const Form = ({ input, setInput, todos, setTodos, editTodo, setEditTodo, callbac
             //     setTodos([...todos, {id: uuidv4(), title: input, completed: false}]);
             // setInput("");
             try {
-                await axios.post("http://localhost:5000/api/task",
+                await axios.post("https://todolist-improving.herokuapp.com/api/task",
                 {
                     task: input, 
                     active: false,
@@ -69,7 +69,7 @@ const Form = ({ input, setInput, todos, setTodos, editTodo, setEditTodo, callbac
             } else {
                 // updateTodo(input, editTodo.id, editTodo.completed)
                 try {
-                    await axios.put(`http://localhost:5000/api/task/${editTodo._id}`,
+                    await axios.put(`https://todolist-improving.herokuapp.com/api/task/${editTodo._id}`,
                     {
                         task: input, 
                         active: editTodo.active,
