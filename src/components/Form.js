@@ -1,6 +1,7 @@
 import { Button, makeStyles } from '@material-ui/core';
 import React, { useEffect } from 'react'
-import {v4 as uuidv4} from "uuid"; 
+// import {v4 as uuidv4} from "uuid";
+import axios from "axios"; 
 
 const useStyles = makeStyles(() => ({
     buttonMain: {
@@ -26,7 +27,7 @@ const useStyles = makeStyles(() => ({
     }
 }));
 
-const Form = ({ input, setInput, todos, setTodos, editTodo, setEditTodo }) => {
+const Form = ({ input, setInput, todos, setTodos, editTodo, setEditTodo, callback, setCallback}) => {
 
     const classes = useStyles();
 
@@ -49,13 +50,36 @@ const Form = ({ input, setInput, todos, setTodos, editTodo, setEditTodo }) => {
         const onInputChange = (event) => {
             setInput(event.target.value);
         };
-        const onFormSubmit = (event) => {
+        const onFormSubmit = async (event) => {
             event.preventDefault();
             if(!editTodo){
-                setTodos([...todos, {id: uuidv4(), title: input, completed: false}]);
-            setInput("");
+            //     setTodos([...todos, {id: uuidv4(), title: input, completed: false}]);
+            // setInput("");
+            try {
+                await axios.post("http://localhost:5000/api/task",
+                {
+                    task: input, 
+                    active: false,
+                }
+                );  
+                setCallback(!callback);
+            } catch (e) {
+                console.log(e);
+            }
             } else {
-                updateTodo(input, editTodo.id, editTodo.completed)
+                // updateTodo(input, editTodo.id, editTodo.completed)
+                try {
+                    await axios.put(`http://localhost:5000/api/task/${editTodo._id}`,
+                    {
+                        task: input, 
+                        active: editTodo.active,
+                    }
+                    );  
+                    setCallback(!callback);
+                    setEditTodo(null);
+                } catch (e) {
+                    console.log(e);
+                }
             }
         }
     return (
