@@ -46,7 +46,7 @@ const useStyles = makeStyles(() => ({
     }
 }));
 
-const TodosList = ({todos, setTodos, setEditTodo, callback, setCallback}) => {
+const TodosList = ({todos, setTodos, setEditTodo, callback, setCallback, setInput}) => {
 
     const classes = useStyles();
 
@@ -61,20 +61,33 @@ const TodosList = ({todos, setTodos, setEditTodo, callback, setCallback}) => {
             }
         }
 
-        const handleComplete = (todo) => {
-            setTodos(
-                todos.map((item) => {
-                    if(item.id === todo.id){
-                        return {...item, completed: !item.completed}
-                    }
-                    return item;
-                })
-            );
-        };
+        const handleComplete = async (todo) => {
+        //     setTodos(
+        //         todos.map((item) => {
+        //             if(item.id === todo.id){
+        //                 return {...item, completed: !item.completed}
+        //             }
+        //             return item;
+        //         })
+        //     );
+        // 
+        try {
+            await axios.put(`https://todolist-improving.herokuapp.com/api/task/${todo._id}`,
+            {
+                task: todo.task, 
+                active: !todo.active,
+            }
+            );  
+            setCallback(!callback);
+        } catch (e) {
+            console.log(e);
+        }
+    };
 
         const handleEdit = ({ _id }) => {
             const findTodo = todos.find((todo) => todo._id === _id);
             setEditTodo(findTodo);
+            setInput(findTodo.task);
         }
 
     return ( 
@@ -84,7 +97,7 @@ const TodosList = ({todos, setTodos, setEditTodo, callback, setCallback}) => {
                 <input 
                 type="text" 
                 value={todo.task} 
-                className={`list ${todo.completed ? "complete" : ""}`} 
+                className={`list ${todo.active ? "complete" : ""}`} 
                 onChange={(event) => event.preventDefault()} 
                 />
 
