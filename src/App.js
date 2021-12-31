@@ -40,7 +40,7 @@ const App = () => {
           />
         </div>
         <div>
-          <TodosList todos={todos} setTodos={setTodos} setEditTodo={setEditTodo} callback={callback} setCallback={setCallback}/>
+          <TodosList setInput={setInput} todos={todos} setTodos={setTodos} setEditTodo={setEditTodo} callback={callback} setCallback={setCallback}/>
         </div>
       </Wrapper>
     </Container>

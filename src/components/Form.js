@@ -31,12 +31,25 @@ const Form = ({ input, setInput, todos, setTodos, editTodo, setEditTodo, callbac
 
     const classes = useStyles();
 
-        const updateTodo = (title, id, completed) => {
-            const newTodo = todos.map((todo) => 
-                todo.id === id ? { title, id, completed } : todo
-            );
-            setTodos(newTodo)
-            setEditTodo("");
+        const updateTodo = async (task, id) => {
+            // const newTodo = todos.map((todo) => 
+            //     todo.id === id ? { title, id, completed } : todo
+            // );
+            // setTodos(newTodo)
+            // setEditTodo("");
+            try {
+                await axios.put(`https://todolist-improving.herokuapp.com/api/task/${id}`,
+                {
+                    task: task, 
+                    active: editTodo.active,
+                }
+                );  
+                setCallback(!callback);
+                setEditTodo(null);
+                setInput("");
+            } catch (e) {
+                console.log(e);
+            }
         };
 
         useEffect(() => {
@@ -67,19 +80,8 @@ const Form = ({ input, setInput, todos, setTodos, editTodo, setEditTodo, callbac
                 console.log(e);
             }
             } else {
-                // updateTodo(input, editTodo.id, editTodo.completed)
-                try {
-                    await axios.put(`https://todolist-improving.herokuapp.com/api/task/${editTodo._id}`,
-                    {
-                        task: input, 
-                        active: editTodo.active,
-                    }
-                    );  
-                    setCallback(!callback);
-                    setEditTodo(null);
-                } catch (e) {
-                    console.log(e);
-                }
+                setInput(editTodo.task);
+                updateTodo(input, editTodo._id);
             }
         }
     return (

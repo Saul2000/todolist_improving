@@ -46,7 +46,7 @@ const useStyles = makeStyles(() => ({
     }
 }));
 
-const TodosList = ({todos, setTodos, setEditTodo, callback, setCallback}) => {
+const TodosList = ({todos, setTodos, setEditTodo, callback, setCallback, setInput}) => {
 
     const classes = useStyles();
 
@@ -75,6 +75,7 @@ const TodosList = ({todos, setTodos, setEditTodo, callback, setCallback}) => {
         const handleEdit = ({ _id }) => {
             const findTodo = todos.find((todo) => todo._id === _id);
             setEditTodo(findTodo);
+            setInput(findTodo.task);
         }
 
     return ( 
