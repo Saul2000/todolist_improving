@@ -19,7 +19,7 @@ const useStyles = makeStyles(() => ({
     buttonDelete: {
         color: 'lightseagreen',
         marginTop: '-12px',
-        transform: 'scale(1.5)'
+        transform: 'scale(1.5)',
     },
     listItem: {
         display: 'flex',
@@ -27,7 +27,7 @@ const useStyles = makeStyles(() => ({
         border: '1px solid #ccc',
         borderRadius: '10px',
         padding: '10px',
-        maxHeight: '30px'
+        maxHeight: '30px',
     },
     list: {
         width: '220px',
@@ -91,7 +91,7 @@ const TodosList = ({todos, setTodos, setEditTodo, callback, setCallback, setInpu
         }
 
     return ( 
-    <div>
+    <div className={classes.Fulltask}>
         {todos.map((todo) => (
             <li className={classes.listItem} key={todo._id}>
                 <input 
@@ -101,7 +101,7 @@ const TodosList = ({todos, setTodos, setEditTodo, callback, setCallback, setInpu
                 onChange={(event) => event.preventDefault()} 
                 />
 
-                <div>
+                <div className={classes.actionButtons}>
                     <IconButton className={classes.buttonCheck} onClick={() => handleComplete(todo)}>
                         <CheckBox/>
                     </IconButton>
