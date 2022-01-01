@@ -12,7 +12,11 @@ const useStyles = makeStyles(() => ({
         border: 0,
         marginBottom: '10px',
         backgroundColor: '#f1af71',
-        cursor: 'pointer'
+        cursor: 'pointer',
+        '@media (max-width: 800px)' : {
+            width: '100%',
+            marginTop: '20px'
+          }
     },
     taskInput: {
         outline: 'none',
@@ -23,7 +27,10 @@ const useStyles = makeStyles(() => ({
         color: '#ccc',
         backgroundColor: '#000',
         border: '1px solid #c89666',
-        borderRadius: '10px'
+        borderRadius: '10px',
+        '@media (max-width: 800px)' : {
+            width: '90%',
+          }
     }
 }));
 
